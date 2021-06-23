@@ -21,11 +21,11 @@
 #define DEFAULT_READ_TO 60000
 
 void take_property_value(client_config *client_config, FILE *config_file) {
-    char buffer[MAX_LENGTH];
-    char *target;
+    char buffer[MAX_LENGTH] = {0};
     //first argument bind a char buffer for keeping target string's content
-    while ((target = trim(fgets(buffer, MAX_LENGTH, config_file))) != NULL) {
+    while (trim(fgets(buffer, MAX_LENGTH, config_file)) != NULL) {
         //check first char, if the target is comment symbol # just ignore
+        char *target = buffer;
         if (*target == '#' || *target == '=')
             continue;
 
@@ -33,24 +33,29 @@ void take_property_value(client_config *client_config, FILE *config_file) {
         while (*target != '=')
             target++;
         const size_t key_len = target - head;
-        char *key = malloc(key_len + 1);
+        //we should free the key when we do not use it later
+        char *key = calloc(key_len + 1, sizeof(char));
         strncpy(key, head, key_len);
-        *(key + key_len + 1) = '\0';
+
+        size_t value_len = strlen(head) - key_len - 1;
+        char *value = malloc(value_len);
+        strncpy(value, target + 1, value_len);
         if (strcmp(key, IP_VAR) == 0) {
-            client_config->ip = target + 1;
+            client_config->ip = value;
         } else if (strcmp(key, PORT_VAR) == 0) {
-            client_config->port = (port_int) atoi(target + 1);
+            client_config->port = (port_int) atoi(value);
         } else if (strcmp(key, USER_VAR) == 0) {
-            client_config->user_name = target + 1;
+            client_config->user_name = value;
         } else if (strcmp(key, PWD_VAR) == 0) {
-            client_config->password = target + 1;
+            client_config->password = value;
         } else if (strcmp(key, WAIT_TO) == 0) {
-            client_config->wait_to = (time_second) atol(target + 1);
+            client_config->wait_to = (time_second) atol(value);
         } else if (strcmp(key, READ_TO) == 0) {
-            client_config->read_to = (time_second) atol(target + 1);
+            client_config->read_to = (time_second) atol(value);
         } else {
             //ignore
         }
+        free(key);
     }
     //assert all client config
     if (client_config->ip == 0) {

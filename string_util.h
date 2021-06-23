@@ -7,4 +7,4 @@
 
 #endif //REDIS_CLIENT_STRING_UTIL_H
 
-char *trim(const char *str);
+char *trim(char *str);

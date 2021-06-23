@@ -8,5 +8,5 @@
 #include "../protocol/redis_data_type.h"
 
 #define auth(pwd, command_buf) make_command((char *[]){"AUTH",(pwd)},2,(command_buf))
-#define auth_with_user(user_name, pwd, command_buf) make_command((char *[]){(user_name),"AUTH",(pwd)},2,(command_buf))
+#define auth_with_user(user_name, pwd, command_buf) make_command((char *[]){"AUTH",(user_name),(pwd)},3,(command_buf))
 #endif //REDIS_CLIENT_UTIL_COMMANDS_H

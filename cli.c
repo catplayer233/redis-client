@@ -27,15 +27,15 @@ int main(const int argc, char **argv) {
 
     char command_input[COMMAND_SIZE];
     char *command_input_ptr;
-    while (strcmp((command_input_ptr = trim(fgets(command_input, COMMAND_SIZE, stdin))), "q") != 0) {
+    while (strcmp(trim(fgets(command_input, COMMAND_SIZE, stdin)), "q") != 0) {
         //max size set 8
+        command_input_ptr = command_input;
         char *command_args[8];
         char *command_arg;
         _arg_num arg_index = 0;
         while ((command_arg = strtok_r(command_input_ptr, " ", &command_input_ptr)) != NULL)
             command_args[arg_index++] = command_arg;
         execute_command(redis_socket, command_args, arg_index);
-        memset(command_input, 0, COMMAND_SIZE);
     }
     disconnect_redis(redis_socket);
     free(redis_socket);
