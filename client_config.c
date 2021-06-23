@@ -44,14 +44,18 @@ void take_property_value(client_config *client_config, FILE *config_file) {
             client_config->ip = value;
         } else if (strcmp(key, PORT_VAR) == 0) {
             client_config->port = (port_int) atoi(value);
+            //the target value already used we should free the memory
+            free(value);
         } else if (strcmp(key, USER_VAR) == 0) {
             client_config->user_name = value;
         } else if (strcmp(key, PWD_VAR) == 0) {
             client_config->password = value;
         } else if (strcmp(key, WAIT_TO) == 0) {
             client_config->wait_to = (time_second) atol(value);
+            free(value);
         } else if (strcmp(key, READ_TO) == 0) {
             client_config->read_to = (time_second) atol(value);
+            free(value);
         } else {
             //ignore
         }
