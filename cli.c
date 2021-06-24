@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "string_util.h"
-#include "command/util_commands.h"
+#include "command/commands_utils.h"
 #include "client_socket.h"
 
 void assert_env(const int argc, char **argv) {
@@ -25,15 +25,14 @@ int main(const int argc, char **argv) {
     redis_socket *redis_socket = create(client_config);
     printf("您已成功建立与服务器的连接，现在进入交互模式，你可以发送redis命令，输入q+回车，结束\n");
 
-    char command_input[COMMAND_SIZE];
-    char *command_input_ptr;
-    while (strcmp(trim(fgets(command_input, COMMAND_SIZE, stdin)), "q") != 0) {
+    char input_buf[COMMAND_SIZE];
+    char *command_buf;
+    while (strcmp((command_buf = trim(fgets(input_buf, COMMAND_SIZE, stdin))), "q") != 0) {
         //max size set 8
-        command_input_ptr = command_input;
         char *command_args[8];
         char *command_arg;
         _arg_num arg_index = 0;
-        while ((command_arg = strtok_r(command_input_ptr, " ", &command_input_ptr)) != NULL)
+        while ((command_arg = strtok_r(command_buf, " ", &command_buf)) != NULL)
             command_args[arg_index++] = command_arg;
         execute_command(redis_socket, command_args, arg_index);
     }

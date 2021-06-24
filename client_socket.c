@@ -91,9 +91,10 @@ redis_socket *create(client_config *client_config) {
 void execute_command(redis_socket *socket, char **command_args, _arg_num arg_num) {
 
     char command_buf[COMMAND_SIZE] = {0};
-    make_command(command_args, arg_num, command_buf);
+    char *command_str = make_command(command_args, arg_num, command_buf);
     const int fd = socket->socket_fd;
-    if (send(fd, command_buf, strlen(command_buf), 0) == -1) {
+    //no need to free command_str, because the command_str is a pointer which point to the command_buf
+    if (send(fd, command_str, strlen(command_str), 0) == -1) {
         printf("发送命令失败，请重试！\n");
         return;
     }

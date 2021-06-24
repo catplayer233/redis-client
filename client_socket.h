@@ -7,7 +7,7 @@
 #endif //REDIS_CLIENT_CLIENT_SOCKET_H
 
 #include "client_config.h"
-#include "command/util_commands.h"
+#include "command/commands_utils.h"
 
 #define REPLY_SIZE  2048
 

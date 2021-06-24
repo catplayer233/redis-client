@@ -2,6 +2,7 @@
 // Created by mahongxu on 6/23/2021.
 //
 #include <string.h>
+#include <stdlib.h>
 #include "string_util.h"
 
 char *trim(char *str) {
@@ -21,4 +22,12 @@ char *trim(char *str) {
         return head_addr;
     } else
         return NULL;
+}
+
+boolean check_num(char *str) {
+    char *end;
+    strtol(str, &end, 10);
+    if (*end == '\0')
+        return TRUE;
+    return FALSE;
 }
