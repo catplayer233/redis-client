@@ -105,7 +105,9 @@ void execute_command(redis_socket *socket, char **command_args, _arg_num arg_num
         fprintf(stderr, "服务端无响应，请重试！\n");
         return;
     }
+    printf("=> ");
     reply_output(command_reply);
+    printf("---------------\n");
 }
 
 void disconnect_redis(redis_socket *redis_socket) {
