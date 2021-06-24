@@ -23,7 +23,7 @@ int main(const int argc, char **argv) {
     if (client_config == NULL) exit(-2);
     printf("redis服务器=> IP: %s, 端口: %d\n", client_config->ip, client_config->port);
     redis_socket *redis_socket = create(client_config);
-    printf("您已成功建立与服务器的连接，现在进入交互模式，你可以发送redis命令，输入q+回车，结束\n");
+    printf("您已成功建立与服务器的连接，现在进入交互模式\n输入<<q+回车>>退出\n");
 
     char input_buf[COMMAND_SIZE];
     char *command_buf;

@@ -95,17 +95,17 @@ void execute_command(redis_socket *socket, char **command_args, _arg_num arg_num
     const int fd = socket->socket_fd;
     //no need to free command_str, because the command_str is a pointer which point to the command_buf
     if (send(fd, command_str, strlen(command_str), 0) == -1) {
-        printf("发送命令失败，请重试！\n");
+        fprintf(stderr, "发送命令失败，请重试！\n");
         return;
     }
 
     char command_reply[REPLY_SIZE] = {0};
     //wait util get the result
     if (recv(fd, command_reply, REPLY_SIZE, 0) == -1) {
-        printf("服务端无响应，请重试！\n");
+        fprintf(stderr, "服务端无响应，请重试！\n");
         return;
     }
-    printf("%s", command_reply);
+    reply_output(command_reply);
 }
 
 void disconnect_redis(redis_socket *redis_socket) {

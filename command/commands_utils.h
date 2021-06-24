@@ -23,6 +23,11 @@ typedef unsigned int _arg_num;
  */
 char *make_command(char **command_args, _arg_num arg_num, char *command_buf);
 
+/*
+ * the command reply response
+ */
+void reply_output(char *command_reply);
+
 #define auth(pwd, command_buf) make_command((char *[]){"AUTH",(pwd)},2,(command_buf))
 #define auth_with_user(user_name, pwd, command_buf) make_command((char *[]){"AUTH",(user_name),(pwd)},3,(command_buf))
 #endif //REDIS_CLIENT_COMMANDS_UTILS_H
