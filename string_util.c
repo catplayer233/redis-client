@@ -2,8 +2,11 @@
 // Created by mahongxu on 6/23/2021.
 //
 #include <string.h>
-#include <stdlib.h>
 #include "string_util.h"
+
+#if defined(_WINDOWS) || defined(_WIN32)
+#define strtok_r strtok_s
+#endif
 
 char *trim(char *str) {
     if (str == NULL)
@@ -24,10 +27,6 @@ char *trim(char *str) {
         return NULL;
 }
 
-boolean check_num(char *str) {
-    char *end;
-    strtol(str, &end, 10);
-    if (*end == '\0')
-        return TRUE;
-    return FALSE;
+char *split(char *origin_str, char *delimiter, char **cursor) {
+    return strtok_r(origin_str, delimiter, cursor);
 }

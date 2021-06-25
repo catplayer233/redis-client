@@ -14,36 +14,6 @@ char *num_as_str(_arg_num arg_num, char *str_buf) {
     return str_buf;
 }
 
-/*
- * check the target arguments is integer number or not.
- * if you want to pass an integer represent string you should add "" to declare the target argument is a string,
- * and we will remove the ""
- *
- * 0 means is not, use this as string, non-zero we treat the target string as integer number
- */
-int check_integers(char **command_arg_ptr) {
-    //the target command_arg already trim, no need to check the extra whitespaces
-    char *command_arg = *command_arg_ptr;
-    size_t arg_len = strlen(command_arg);
-    //the arg has "", check the value
-    if (*command_arg == '\"' && *(command_arg + arg_len) == '\"') {
-        char *tmp_arg = calloc(arg_len - 1, sizeof(char));
-        strncpy(tmp_arg, command_arg + 1, arg_len - 1);
-        if (check_num(tmp_arg)) {
-            //remove the ""
-            *(command_arg + arg_len) = '\0';
-            (*command_arg_ptr)++;
-            free(tmp_arg);
-            return TRUE;
-        } else {
-            free(tmp_arg);
-            //keep the ""
-            return FALSE;
-        }
-    }
-    return check_num(command_arg);
-}
-
 char *make_command(char **command_args, _arg_num arg_num, char *command_buf) {
     //when you use the strcat or something like that you should make sure the dest string(char array) has enough spaces to keep the src str' chars
     //otherwise this will cause memory protection problem

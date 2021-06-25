@@ -38,7 +38,7 @@ void take_property_value(client_config *client_config, FILE *config_file) {
         strncpy(key, head, key_len);
 
         size_t value_len = strlen(head) - key_len - 1;
-        char *value = malloc(value_len);
+        char *value = calloc(value_len + 1, sizeof(char));
         strncpy(value, target + 1, value_len);
         if (strcmp(key, IP_VAR) == 0) {
             client_config->ip = value;
@@ -81,10 +81,11 @@ void take_property_value(client_config *client_config, FILE *config_file) {
 client_config *load_client_config(char *file_name) {
     FILE *config_file = fopen(file_name, "r");
     if (config_file == NULL) {
-        fprintf(stderr, "无法打开目标文件：%s\n", file_name);
+        fprintf(stderr, "can not opened: %s\n", file_name);
         return NULL;
     }
-    client_config *client_config_ptr = (client_config *) malloc(sizeof(client_config));
+    client_config *client_config_ptr = malloc(sizeof(client_config));
+    memset(client_config_ptr, 0, sizeof(client_config));
     take_property_value(client_config_ptr, config_file);
     //whatever success or not
     fclose(config_file);
