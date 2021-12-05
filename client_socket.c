@@ -4,7 +4,7 @@
 #include "client_socket.h"
 #include "string_util.h"
 
-#ifdef __unix__
+#if defined(__unix__) || defined(__APPLE__)
 
 #include <sys/socket.h>
 #include <netinet/in.h>
