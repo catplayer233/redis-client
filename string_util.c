@@ -8,25 +8,46 @@
 #define strtok_r strtok_s
 #endif
 
-char *trim(char *str) {
+char *trim(const char *str) {
     if (str == NULL)
         return NULL;
+
+    if (strlen(str) == 0) {
+        return str;
+    }
+
     //when the char is not the white space and not end of file
-    char *head_addr = str;
-    char *tail_addr = str + strlen(str) - 1;
-    while (*head_addr <= ' ')
-        head_addr++;
-    while (*tail_addr <= ' ')
-        tail_addr--;
+    const char *head_addr = str;
+    const char *tail_addr = str + strlen(str) - 1;
+
+    char *current_addr = head_addr;
+    while (*current_addr <= ' ') {
+        current_addr++;
+        //we already reached the last char, empty
+        if (current_addr >= tail_addr) {
+            return "";
+        }
+    }
+
+    const char *valid_begin = current_addr;
+
+    //now we try to trim end
+    current_addr = tail_addr;
+
+    while (*current_addr <= ' ') {
+        current_addr--;
+    }
+
     //not empty
-    const size_t length = tail_addr + 1 - head_addr;
+    const size_t length = current_addr + 1 - valid_begin;
     if (length > 0) {
-        *(tail_addr + 1) = '\0';
-        return head_addr;
-    } else
-        return NULL;
+        *(current_addr + 1) = '\0';
+        return valid_begin;
+    } else {
+        return "";
+    }
 }
 
-char *split(char *origin_str, char *delimiter, char **cursor) {
+char *split(char *origin_str, const char *delimiter, char **cursor) {
     return strtok_r(origin_str, delimiter, cursor);
 }

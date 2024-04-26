@@ -1,1 +1,6 @@
 /cmake-build-debug/
+/CMakeSettings.json
+/out/
+/cmake-build-debug-coverage/
+/cmake-build-debug-windows/
+/cmake-build-debug-wsl/

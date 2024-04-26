@@ -7,8 +7,8 @@
 
 #endif //REDIS_CLIENT_STRING_UTIL_H
 
-char *trim(char *str);
+char *trim(const char *str);
 
-char *split(char *origin_str, char *delimiter, char **cursor);
+char *split(char *origin_str, const char *delimiter, char **cursor);
 
 int is_empty(char *target_str);

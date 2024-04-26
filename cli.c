@@ -29,6 +29,11 @@ int main(const int argc, char **argv) {
     char input_buf[COMMAND_SIZE];
     char *command_buf;
     while (strcmp((command_buf = trim(fgets(input_buf, COMMAND_SIZE, stdin))), "q") != 0) {
+        //ignore new line operations
+        if (strlen(command_buf) <= 0) {
+            printf("---------------\n");
+            continue;
+        }
         //max size set 8
         char *command_args[8];
         char *command_arg;
@@ -46,8 +51,9 @@ int main(const int argc, char **argv) {
 /*
  * test purpose
  */
-//int main() {
-//    char command_buf[1024] = {0};
-//    printf("%s\n", auth("123", command_buf));
-//    return 0;
-//}
+// int main() {
+//     int *escape = string_escape_test();
+//     printf("%d\n", escape[0]);
+//
+//     free(escape);
+// }
